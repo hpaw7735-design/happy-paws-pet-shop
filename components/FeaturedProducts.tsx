@@ -8,8 +8,10 @@ import type { Product } from "@/types";
 export default function FeaturedProducts() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const loadProducts = async () => {
       try {
         const data = await fetchFeaturedProducts();
@@ -24,7 +26,7 @@ export default function FeaturedProducts() {
     loadProducts();
   }, []);
 
-  if (loading) {
+  if (!mounted || loading) {
     return (
       <section className="section-container py-xl md:py-2xl">
         <p className="text-center text-body">Loading featured products...</p>
