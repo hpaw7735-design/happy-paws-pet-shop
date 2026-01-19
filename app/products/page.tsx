@@ -9,8 +9,10 @@ export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const loadProducts = async () => {
       try {
         const data = await fetchProducts();
@@ -26,6 +28,10 @@ export default function ProductsPage() {
 
     loadProducts();
   }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <div className="section-container animate-fadeIn">
