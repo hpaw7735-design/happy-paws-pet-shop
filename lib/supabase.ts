@@ -1,19 +1,25 @@
 import { createClient } from "@supabase/supabase-js";
 import type { Product } from "@/types";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+let supabaseClient: ReturnType<typeof createClient> | null = null;
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.warn(
-    "Supabase credentials not configured. Products will not load."
-  );
+function getSupabaseClient() {
+  if (supabaseClient) return supabaseClient;
+
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (!supabaseUrl || !supabaseAnonKey) {
+    throw new Error("Supabase credentials not configured");
+  }
+
+  supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
+  return supabaseClient;
 }
-
-const supabase = createClient(supabaseUrl || "", supabaseAnonKey || "");
 
 export async function fetchProducts(): Promise<Product[]> {
   try {
+    const supabase = getSupabaseClient();
     const { data, error } = await supabase
       .from("products")
       .select("*")
@@ -29,6 +35,7 @@ export async function fetchProducts(): Promise<Product[]> {
 
 export async function fetchFeaturedProducts(): Promise<Product[]> {
   try {
+    const supabase = getSupabaseClient();
     const { data, error } = await supabase
       .from("products")
       .select("*")
