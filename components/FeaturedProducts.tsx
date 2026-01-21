@@ -18,6 +18,7 @@ export default function FeaturedProducts() {
         setProducts(data.slice(0, 3));
       } catch (err) {
         console.error("Failed to load featured products:", err);
+        setProducts([]);
       } finally {
         setLoading(false);
       }
@@ -26,7 +27,9 @@ export default function FeaturedProducts() {
     loadProducts();
   }, []);
 
-  if (!mounted || loading) {
+  if (!mounted) return null;
+
+  if (loading) {
     return (
       <section className="section-container py-xl md:py-2xl">
         <p className="text-center text-body">Loading featured products...</p>
@@ -39,10 +42,13 @@ export default function FeaturedProducts() {
   }
 
   return (
-    <section className="section-container py-xl md:py-2xl bg-secondary rounded-lg">
-      <h2 className="heading-2 mb-lg text-center animate-slideUp">
-        Featured Products
-      </h2>
+    <section className="section-container py-xl md:py-2xl">
+      <div className="flex items-center justify-between mb-lg">
+        <h2 className="heading-2">Featured Products</h2>
+        <a href="/products" className="btn-ghost">
+          View All
+        </a>
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-lg">
         {products.map((product, index) => (
           <div
