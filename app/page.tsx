@@ -2,8 +2,10 @@
 
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
+import Hero from "@/components/Hero";
+import Intro from "@/components/Intro";
 
-const FeaturedProducts = dynamic(() => import("./FeaturedProducts"), {
+const FeaturedProducts = dynamic(() => import("@/components/FeaturedProducts"), {
   ssr: false,
   loading: () => (
     <section className="section-container py-xl md:py-2xl">
@@ -11,9 +13,6 @@ const FeaturedProducts = dynamic(() => import("./FeaturedProducts"), {
     </section>
   ),
 });
-
-import Hero from "@/components/Hero";
-import Intro from "@/components/Intro";
 
 export default function Home() {
   return (
