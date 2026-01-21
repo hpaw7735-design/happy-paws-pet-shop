@@ -3,10 +3,11 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Happy Paws Pet Shop",
   description: "Quality pet food, toys, and accessories for your beloved pets",
-  viewport: "width=device-width, initial-scale=1",
 };
 
 export default function RootLayout({
