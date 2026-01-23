@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Hero from "@/components/Hero";
+import Categories from "@/components/Categories";
 import Intro from "@/components/Intro";
 import FeaturedProducts from "@/components/FeaturedProducts";
 
@@ -17,6 +18,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <Categories />
       <Intro />
       <FeaturedProducts />
     </>

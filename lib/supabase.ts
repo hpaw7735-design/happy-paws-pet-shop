@@ -49,3 +49,21 @@ export async function fetchFeaturedProducts(): Promise<Product[]> {
     return [];
   }
 }
+
+export async function fetchCategories(): Promise<
+  Array<{ id: string; name: string; description?: string; emoji?: string }>
+> {
+  try {
+    const supabase = getSupabaseClient();
+    const { data, error } = await supabase
+      .from("categories")
+      .select("*")
+      .order("name", { ascending: true });
+
+    if (error) throw error;
+    return data || [];
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    return [];
+  }
+}
